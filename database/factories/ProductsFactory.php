@@ -25,7 +25,8 @@ class ProductsFactory extends Factory
             'discount_price' => fake()->optional()->randomFloat(2, 5, 900),
             'quantity' => fake()->numberBetween(0, 100),
             'img_path' => fake()->optional()->imageUrl(640, 480, true),
-            'color' => fake()->optional()->safeColorName(),
+            'color' => fake()->safeColorName(),
+            'storage' => fake()->randomElement(['64', '128', '256', '512', '1']),
             'availability_status' => fake()->randomElement(['In stock', 'Out of stock']),
             'category' => fake()->randomElement(['iphone', 'Android', "Windows"]),
             'stock_status' => fake()->boolean(80), // 80% chance of being true

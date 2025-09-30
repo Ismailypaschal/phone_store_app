@@ -9,11 +9,12 @@ use App\Http\Controllers\RegisterUserController;
 use App\Http\Controllers\ProductsController;
 
 Route::get('/', [ProductsController::class, 'index'])->name('store.index');
-Route::get('/store/{slug}', [ProductsController::class, 'show'])->name('store.show');
+Route::get('/store/{product:name}', [ProductsController::class, 'show'])->name('store.show');
+Route::get('/search', ProductsController::class)->name('search');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
-Route::delete('/cart/{slug}', [CartController::class, 'remove'])->name('cart.remove');
+Route::delete('/cart/{name}', [CartController::class, 'remove'])->name('cart.remove');
 
 route::middleware('auth')->group(
     function () {

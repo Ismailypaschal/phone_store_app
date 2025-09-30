@@ -22,6 +22,7 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(0);
             $table->string('img_path', 255)->nullable();
             $table->string('color', 50)->nullable();
+            $table->enum('storage', ['64', '128', '256', '512']);
             $table->string('availability_status', 20)->default('In Stock');
             $table->string('category', 100);
             $table->boolean('stock_status')->default(true);

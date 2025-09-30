@@ -16,19 +16,27 @@ class ProductSeeder extends Seeder
     public function run(): void
     {
         $brands = Brand::factory(3)->create();
-        Products::factory()
-            ->count(20)
-            ->state(new Sequence(
+         // Create products evenly across brands
+        foreach ($brands as $brand) {
+            Products::factory()
+                ->count(100 / $brands->count()) // divide evenly
+                ->create([
+                    'brand_id' => $brand->id,
+                ]);
+        }
+        // Products::factory()
+        //     ->count(20)
+        //     ->state(new Sequence(
 
-                [
-                    'stock_status' => true,
-                    'availability_status' => 'In stock'
-                ],
-                [
-                    'stock_status' => false,
-                    'availability_status' => 'Out of stock'
-                ]
-            ))
-            ->create();
+        //         [
+        //             'stock_status' => true,
+        //             'availability_status' => 'In stock'
+        //         ],
+        //         [
+        //             'stock_status' => false,
+        //             'availability_status' => 'Out of stock'
+        //         ]
+        //     ))
+        //     ->create();
     }
 }

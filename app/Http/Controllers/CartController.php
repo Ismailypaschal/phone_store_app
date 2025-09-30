@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use App\Models\Products;
 
 class CartController extends Controller
 {
@@ -20,19 +21,20 @@ class CartController extends Controller
     public function add(Request $request): RedirectResponse
     {
         $data = $request->validate([
-            'slug' => ['required', 'string'],
+            'product_id' => ['required', 'string', 'exists:products,id'],
             'quantity' => ['nullable', 'integer', 'min:1'],
         ]);
         $quantity = $data['quantity'] ?? 1;
 
-        $product = collect(config('products'))
-            ->firstWhere('slug', $data['slug']);
+        // $product = Products::firstWhere('product_id', $data['product_id']);
+        // fetch product by ID
+        $product = Products::findOrFail($data['product_id']);
         abort_unless($product, 404);
 
         $cart = session()->get('cart', []);
-        $cart[$product['slug']] = [
+        $cart[$product->id] = [
             'product' => $product,
-            'quantity' => ($cart[$product['slug']]['quantity'] ?? 0) + $quantity,
+            'quantity' => ($cart[$product->id]['quantity'] ?? 0) + $quantity,
         ];
         session(['cart' => $cart]);
 

@@ -17,12 +17,12 @@
         <tbody class="bg-white divide-y divide-gray-200">
             @forelse ($items as $item)
             <tr>
-                <td class="px-4 py-2">{{ $item['product']['brand'] }} {{ $item['product']['model'] }}</td>
+                <td class="px-4 py-2">{{ $item['product']['name'] }}</td>
                 <td class="px-4 py-2">$ {{ number_format($item['product']['price'], 2) }}</td>
                 <td class="px-4 py-2">{{ $item['quantity'] }}</td>
                 <td class="px-4 py-2">$ {{ number_format($item['product']['price'] * $item['quantity'], 2) }}</td>
                 <td class="px-4 py-2 text-right">
-                    <form method="POST" action="{{ route('cart.remove', $item['product']['slug']) }}">
+                    <form method="POST" action="{{ route('cart.remove', $item['product']['id']) }}">
                         @csrf
                         @method('DELETE')
                         <button class="text-red-600 hover:underline">Remove</button>
