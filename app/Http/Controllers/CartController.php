@@ -29,7 +29,6 @@ class CartController extends Controller
         // $product = Products::firstWhere('product_id', $data['product_id']);
         // fetch product by ID
         $product = Products::findOrFail($data['product_id']);
-        abort_unless($product, 404);
 
         $cart = session()->get('cart', []);
         $cart[$product->id] = [
@@ -41,10 +40,10 @@ class CartController extends Controller
         return back()->with('status', 'Added to cart');
     }
 
-    public function remove(string $slug): RedirectResponse
+    public function remove(string $productId): RedirectResponse
     {
         $cart = session()->get('cart', []);
-        unset($cart[$slug]);
+        unset($cart[$productId]);
         session(['cart' => $cart]);
         return back()->with('status', 'Removed from cart');
     }

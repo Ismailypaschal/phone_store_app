@@ -2,66 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use App\Models\fp;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    public function showLogin(): View
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
     {
-        return view('auth.login');
+        //
     }
 
-    public function login(Request $request): RedirectResponse
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
-
-        if (Auth::attempt($credentials, $request->boolean('remember'))) {
-            $request->session()->regenerate();
-            return redirect()->intended(route('store.index'));
-        }
-
-        return back()->withErrors(['email' => 'Invalid credentials'])->onlyInput('email');
+        //
     }
 
-    public function showRegister(): View
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
-        return view('auth.register');
+        //
     }
 
-    public function register(Request $request): RedirectResponse
+    /**
+     * Display the specified resource.
+     */
+    public function show(fp $fp)
     {
-        $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
-            'password' => ['required', 'min:6', 'confirmed'],
-        ]);
-
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
-
-        Auth::login($user);
-
-        return redirect()->route('store.index');
+        //
     }
 
-    public function logout(Request $request): RedirectResponse
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(fp $fp)
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('store.index');
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, fp $fp)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(fp $fp)
+    {
+        //
     }
 }
-
-
