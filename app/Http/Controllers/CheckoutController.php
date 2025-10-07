@@ -11,6 +11,8 @@ use App\Models\Products;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderConfirmationMail;
 
 class CheckoutController extends Controller
 {
@@ -115,6 +117,9 @@ class CheckoutController extends Controller
             Log::info('Transaction committed successfully');
             
             // Clear cart after successful order
+                // After order and order items are created successfully
+                // Send order confirmation email
+                Mail::to($order->customer_email)->send(new OrderConfirmationMail($order));
             session()->forget('cart');
             
             return redirect()->route('store.index')->with('status', 'Order placed successfully! Order #' . $order->id);

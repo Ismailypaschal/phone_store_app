@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Password;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeMail;
 
 class RegisterUserController extends Controller
 {
@@ -21,6 +23,9 @@ class RegisterUserController extends Controller
         ]);
         $user = User::create($data);
         Auth::login($user);
+        
+        // Send welcome email after registration
+        Mail::to($user->email)->send(new WelcomeMail($user));
 
         return redirect('/');
     }

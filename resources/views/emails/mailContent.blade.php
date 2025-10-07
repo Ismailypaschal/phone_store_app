@@ -1,0 +1,1 @@
+<p> Your order have been delivered successfully. Thank you for shopping with us!</p>
