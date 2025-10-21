@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OrderConfirmationMail;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -35,18 +36,107 @@ class CheckoutController extends Controller
         return view('checkout.index', compact('items', 'subtotal', 'shipping', 'total'));
     }
 
-    public function process(Request $request): RedirectResponse
+    // public function process(Request $request): RedirectResponse
+    // {
+    //     Log::info('Form received:', $request->all());
+    //     // dd($request->all());
+
+    //     // Debug: Log that we reached this method
+    //     Log::info('Checkout process method called', [
+    //         'user_id' => Auth::id(),
+    //         'cart_count' => count(session()->get('cart', [])),
+    //         'request_data' => $request->all()
+    //     ]);
+
+    //     // Validate checkout form data
+    //     $validated = $request->validate([
+    //         'first_name' => 'required|string|max:255',
+    //         'last_name' => 'required|string|max:255',
+    //         'customer_email' => 'required|email|max:255',
+    //         'customer_phone' => 'required|string|max:20',
+    //         'customer_state' => 'required|string|max:100',
+    //         'customer_city' => 'required|string|max:100',
+    //         'shipping_address' => 'required|string|max:500',
+    //     ]);
+
+    //     $cart = session()->get('cart', []);
+        
+    //     if (empty($cart)) {
+    //         return redirect()->route('cart.index')->with('error', 'Your cart is empty');
+    //     }
+
+    //     // Calculate totals
+    //     $items = array_values($cart);
+    //     $subtotal = array_reduce($items, fn ($sum, $i) => $sum + ($i['product']['price'] * $i['quantity']), 0);
+    //     $shipping = $subtotal > 0 ? 15.00 : 0.00;
+    //     $total = $subtotal + $shipping;
+
+    //     // Create order in database transaction
+    //     DB::beginTransaction();
+        
+    //     try {
+    //         Log::info('Starting order creation', ['total' => $total, 'shipping' => $shipping]);
+            
+    //         // Create the order
+    //         $order = Order::create([
+    //             'user_id' => Auth::id(),
+    //             'first_name' => $validated['first_name'],
+    //             'last_name' => $validated['last_name'],
+    //             'customer_email' => $validated['customer_email'],
+    //             'customer_phone' => $validated['customer_phone'],
+    //             'customer_state' => $validated['customer_state'],
+    //             'customer_city' => $validated['customer_city'],
+    //             'shipping_address' => $validated['shipping_address'],
+    //             'total_price' => $total,
+    //             'shipping_fee' => $shipping,
+    //             'order_status' => 'processing',
+    //         ]);
+            
+    //         Log::info('Order created successfully', ['order_id' => $order->id]);
+
+    //         // Create order items
+    //         foreach ($items as $item) {
+    //             $product = $item['product']; // Product is already stored in cart
+                
+    //             OrderItem::create([
+    //                 'order_id' => $order->id,
+    //                 'product_id' => $product->id,
+    //                 'product_name' => $product->name,
+    //                 'quantity' => $item['quantity'],
+    //                 'price_at_purchase' => $product->price,
+    //                 'discount_at_purchase' => $product->discount_price,
+    //             ]);
+                
+    //             Log::info('Order item created', [
+    //                 'order_id' => $order->id,
+    //                 'product_id' => $product->id,
+    //                 'quantity' => $item['quantity']
+    //             ]);
+    //         }
+
+    //         DB::commit();
+    //         Log::info('Transaction committed successfully');
+            
+    //         // Clear cart after successful order
+    //             // After order and order items are created successfully
+    //             // Send order confirmation email
+    //             Mail::to($order->customer_email)->send(new OrderConfirmationMail($order));
+    //         session()->forget('cart');
+            
+    //         return redirect()->route('store.index')->with('status', 'Order placed successfully! Order #' . $order->id);
+            
+    //     } catch (\Exception $e) {
+    //         DB::rollback();
+    //         Log::error('Order creation failed', [
+    //             'error' => $e->getMessage(),
+    //             'trace' => $e->getTraceAsString()
+    //         ]);
+    //         return redirect()->back()->with('error', 'Failed to place order: ' . $e->getMessage());
+    //     }
+    // }
+    public function processAndPay(Request $request): RedirectResponse
     {
-        Log::info('Form received:', $request->all());
-        // dd($request->all());
-
-        // Debug: Log that we reached this method
-        Log::info('Checkout process method called', [
-            'user_id' => Auth::id(),
-            'cart_count' => count(session()->get('cart', [])),
-            'request_data' => $request->all()
-        ]);
-
+        Log::info('Combined checkout and payment called', $request->all());
         // Validate checkout form data
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
@@ -57,26 +147,21 @@ class CheckoutController extends Controller
             'customer_city' => 'required|string|max:100',
             'shipping_address' => 'required|string|max:500',
         ]);
-
+          
         $cart = session()->get('cart', []);
-        
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty');
         }
 
-        // Calculate totals
         $items = array_values($cart);
         $subtotal = array_reduce($items, fn ($sum, $i) => $sum + ($i['product']['price'] * $i['quantity']), 0);
         $shipping = $subtotal > 0 ? 15.00 : 0.00;
         $total = $subtotal + $shipping;
 
-        // Create order in database transaction
+        $paymentMethod = $request->payment_method ?? 'paystack';  
+
         DB::beginTransaction();
-        
         try {
-            Log::info('Starting order creation', ['total' => $total, 'shipping' => $shipping]);
-            
-            // Create the order
             $order = Order::create([
                 'user_id' => Auth::id(),
                 'first_name' => $validated['first_name'],
@@ -89,14 +174,10 @@ class CheckoutController extends Controller
                 'total_price' => $total,
                 'shipping_fee' => $shipping,
                 'order_status' => 'processing',
+                'reference' => 'ORD-' . strtoupper(Str::random(10)), // ✅ generate unique Paystack reference
             ]);
-            
-            Log::info('Order created successfully', ['order_id' => $order->id]);
-
-            // Create order items
             foreach ($items as $item) {
-                $product = $item['product']; // Product is already stored in cart
-                
+                $product = $item['product'];
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
@@ -105,28 +186,40 @@ class CheckoutController extends Controller
                     'price_at_purchase' => $product->price,
                     'discount_at_purchase' => $product->discount_price,
                 ]);
-                
-                Log::info('Order item created', [
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'quantity' => $item['quantity']
-                ]);
             }
-
             DB::commit();
-            Log::info('Transaction committed successfully');
-            
-            // Clear cart after successful order
-                // After order and order items are created successfully
-                // Send order confirmation email
-                Mail::to($order->customer_email)->send(new OrderConfirmationMail($order));
             session()->forget('cart');
+            // Redirect to payment initiation (PaymentController)
+            // return redirect()->route('payment.process', [
+            //     'amount' => $total,
+            //     'customer_email' => $validated['customer_email'],
+            //     'order_id' => $order->id,
+            //     'reference' => $order->reference, // ✅ include reference
+            // ]);
+            if ($paymentMethod === 'paystack') {
+        return redirect()->route('payment.process', [
+            'amount' => $total,
+            'customer_email' => $validated['customer_email'],
+            'reference' => $order->reference,
             
-            return redirect()->route('store.index')->with('status', 'Order placed successfully! Order #' . $order->id);
-            
+        ]);
+    } elseif ($paymentMethod === 'flutterwave') {
+        // Redirect to Flutterwave initiation (you'll need a similar route/controller method)
+        return redirect()->route('flutter_payment.page', [
+            'amount' => $total,
+            'customer_email' => $validated['customer_email'],
+            'reference' => $order->reference,
+            'order_id' => $order->id,
+        ]);
+    } else {
+        // ✅ Catch-all fallback to satisfy the return type
+        return redirect()
+            ->route('checkout.index')
+            ->with('error', 'Invalid payment method selected.');
+    }
         } catch (\Exception $e) {
             DB::rollback();
-            Log::error('Order creation failed', [
+            Log::error('Combined order/payment failed', [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);

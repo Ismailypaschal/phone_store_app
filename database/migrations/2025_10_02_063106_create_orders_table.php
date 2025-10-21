@@ -26,6 +26,7 @@ return new class extends Migration
             $table->text('shipping_address');
             $table->decimal('total_price',8, 2);
             $table->decimal('shipping_fee',8, 2);
+            $table->string('reference')->unique();
             $table->enum('order_status', ['processing', 'confirmed', 'cancelled', 'delivered', 'shipped','refunded']);
             $table->timestamps();
         });

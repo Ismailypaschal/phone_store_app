@@ -20,6 +20,7 @@ class Order extends Model
         'total_price',
         'shipping_fee',
         'order_status',
+        'reference', // ✅ ADD THIS LINE
     ];
 
     protected $casts = [
