@@ -10,6 +10,7 @@
                 <tr class="flex justify-between"><td>Amount: </td><td>₦{{$data->amount/100}}</td></tr>
                 <tr class="flex justify-between"><td>Fees: </td><td>₦{{$data->fees/100}}</td></tr>
                 <tr class="flex justify-between"><td>Email: </td><td>{{$data->customer->email}}</td></tr>
+                <a href="{{ route('store.index') }}" class="mt-4 inline-block px-4 py-2 bg-blue-600 text-white rounded">Continue Shopping</a>
             </tbody>
         </table>
         {{-- @if (session()->has('error'))

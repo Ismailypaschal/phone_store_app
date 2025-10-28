@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('customer_state');
             $table->string('customer_city');
             $table->text('shipping_address');
-            $table->decimal('total_price',8, 2);
-            $table->decimal('shipping_fee',8, 2);
+            $table->decimal('total_price', 8, 2);
+            $table->decimal('shipping_fee', 8, 2);
             $table->string('reference')->unique();
-            $table->enum('order_status', ['processing', 'confirmed', 'cancelled', 'delivered', 'shipped','refunded']);
+            $table->enum('order_status', ['processing', 'confirmed', 'cancelled', 'delivered', 'shipped', 'refunded']);
             $table->timestamps();
         });
         Schema::create('order_items', function (Blueprint $table) {
@@ -43,10 +43,10 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete();
-            $table->enum('payment_method', ['bank_transfer', 'card', 'paypal']);
+            $table->enum('payment_method', ['bank_transfer', 'card', 'paystack', 'flutterwave']);
             $table->string('transaction_id');
             $table->decimal('amount', 8, 2);
-            $table->enum('status', ['pending', 'success', 'failed']);
+            $table->enum('status', ['pending', 'paid', 'failed']);
             $table->timestamps();
         });
     }

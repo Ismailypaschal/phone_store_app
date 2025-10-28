@@ -19,8 +19,6 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 Route::delete('/cart/{name}', [CartController::class, 'remove'])->name('cart.remove');
 Route::get('email', [EmailsController::class, 'sendEmail']);
-Route::any('/flutter/pay', [FlutterPaymentController::class, 'pay_with_flutter'])->name('flutter_payment.page');
-Route::post('verify-flutter_payment', [FlutterPaymentController::class, 'verifyPayment'])->name('flutter_payment.verify');
 
 Route::middleware('auth')->group(
     function () {
@@ -29,6 +27,11 @@ Route::middleware('auth')->group(
         // Route::get('/pay', [PaymentController::class, 'pay'])->name('payment.page');
         Route::get('/pay', [PaymentController::class, 'processPayment'])->name('payment.process');
         Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback'])->name('payment.callback');
+        Route::any('/flutter/pay', [FlutterPaymentController::class, 'pay_with_flutter'])->name('flutter_payment.page');
+        Route::post('verify-flutter_payment', [FlutterPaymentController::class, 'verifyPayment'])->name('flutter_payment.verify');
+        Route::get('/payment/success/{reference}', [FlutterPaymentController::class, 'showPaymentDetails'])
+            ->name('flutter_payment.success');
+
         Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
     }
 );

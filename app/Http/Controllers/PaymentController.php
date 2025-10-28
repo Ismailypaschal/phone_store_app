@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Mail\OrderConfirmationMail;
 use App\Models\Order;
+use App\Models\Payment;
+
 
 class PaymentController extends Controller
 {
@@ -35,37 +38,54 @@ class PaymentController extends Controller
         $response = $this->verifyPayment(request('reference'));
         Log::info('Payment verification response', ['response' => $response]);
         $result = json_decode($response);
-        if ($result && $result->status) {
-            $data = $result->data;
-            // Assuming $order is available or needs to be fetched based on $data
-            // Example: $order = Order::where('reference', $data->reference)->first();
-            // Make sure to import the Order model if used: use App\Models\Order;
-            // For demonstration, we'll use $data as $order if it contains customer_email
-            // Find the order saved earlier using the Paystack reference
-            $order = Order::where('reference', $data->reference)->first();
-            if ($order) {
-                // Send confirmation email
-                Mail::to($order->customer_email)->send(new OrderConfirmationMail($order));
+        $data = $result ? $result->data : null;
+        // $data = $result->data;
+        // Assuming $order is available or needs to be fetched based on $data
+        // Example: $order = Order::where('reference', $data->reference)->first();
+        // For demonstration, we'll use $data as $order if it contains customer_email
+        // Find the order saved earlier using the Paystack reference
+        $order = Order::where('reference', $data->reference)->first();
+        if ($order) {
+            // Send confirmation email
+            Mail::to($order->customer_email)->queue(new OrderConfirmationMail($order));
 
-                return view('pays.paymentCallback')->with(compact('order', 'data'));
-
-                // Mail::to($data->customer->email)->send(new OrderConfirmationMail($data));
-                // return view('pays.paymentCallback')->with(compact('data'));
-                // Mail::to($order->customer_email)->send(new OrderConfirmationMail($order));
-                // return view('pays.paymentCallback')->with(compact('data'));
-            } else {
-                Log::error('Payment verification failed', ['message' => $result->message]);
-                return back()->withError($result->message);
+            // Payment table logic
+            DB::beginTransaction();
+            try {
+                $status = $result && $result->status ? 'paid' : 'failed';
+                $payment = Payment::create([
+                    'order_id' => $order->id,
+                    'payment_method' => 'paystack',
+                    'amount' => $data->amount / 100, // Convert back to Naira
+                    'status' => 'paid',
+                    'transaction_id' => $data->id,
+                ]);
+                DB::commit();
+                if ($status === 'paid') {
+                    // Send confirmation email
+                    Mail::to($order->customer_email)->queue(new OrderConfirmationMail($order));
+                    return view('pays.paymentcallback')->with(compact('order', 'data'));
+                } else {
+                    return back()->withError($result->message ?? "Something went wrong, please try again later");
+                }
+            } catch (\Exception $e) {
+                DB::rollback();
+                Log::error('Payment record creation failed', [
+                    'error' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString()
+                ]);
             }
+
+            return view('pays.paymentcallback')->with(compact('order', 'data'));
         } else {
-            Log::error('Payment verification failed: No result');
-            return back()->withError("Something went wrong, please try again later");
+            Log::error('Payment verification failed', ['message' => $result->message]);
+            return back()->withError($result->message);
         }
     }
     public function processPayment()
     {
         Log::info('PaymentController@processPayment called', [
-            'amount' => request('amount'),
+            'order_id' => request('amount'),
             'email' => request('email')
         ]);
         // Fetch the user's pending order (created before payment)
