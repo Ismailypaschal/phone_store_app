@@ -5,11 +5,14 @@ use App\Http\Controllers\StoreController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\SessionController;
+use App\Http\Controllers\Admin\AdminSessionController;
 use App\Http\Controllers\RegisterUserController;
+use App\Http\Controllers\Admin\RegisterAdminController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\EmailsController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\FlutterPaymentController;
+use App\Http\Controllers\Admin\DashboardController;
 
 Route::get('/', [ProductsController::class, 'index'])->name('store.index');
 Route::get('/store/{product:name}', [ProductsController::class, 'show'])->name('store.show');
@@ -35,6 +38,19 @@ Route::middleware('auth')->group(
         Route::post('/logout', [SessionController::class, 'destroy'])->name('logout');
     }
 );
+
+// Admin Routes
+Route::prefix('admin')->group(function () {
+    Route::get('/signin', [AdminSessionController::class, 'showSignin'])->name('signin');
+    Route::get('/signup', [RegisterAdminController::class, 'showSignup'])->name('signup');
+    Route::post('/signup', [RegisterAdminController::class, 'storeSignup'])->name('store.signup');
+});
+Route::prefix('admin')->middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/table', [DashboardController::class, 'showTable'])->name('table');
+    Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
+    Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');
+});
 
 // Auth
 Route::middleware('guest')->group(function () {
