@@ -1,0 +1,1 @@
+vendor/ node_modules/ rm -r --cached vendor node_modulesgit add .git commit -m Remove vendor and node_modules from repo
