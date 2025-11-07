@@ -61,14 +61,46 @@
           </a>
         </li>
 
+         <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="{{ route('customer.orders') }}">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Customer Order</span>
+          </a>
+        </li>
+
         <li class="mt-0.5 w-full">
           <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-            href="{{ route('table') }}">
+            href="{{ route('customer.details') }}">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Customer Details</span>
+          </a>
+        </li>
+
+        <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="{{ route('manage.products') }}">
             <div
               class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
               <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
             </div>
-            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Tables</span>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Manage Products</span>
+          </a>
+        </li>
+        <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="{{ route('add.products') }}">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-calendar-grid-58"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Add New Products</span>
           </a>
         </li>
 
@@ -82,27 +114,7 @@
             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Billing</span>
           </a>
         </li>
-        <li class="mt-0.5 w-full">
-          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-            href="{{ route('customer.orders') }}">
-            <div
-              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
-              <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
-            </div>
-            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Customer Order</span>
-          </a>
-        </li>
-        <li class="mt-0.5 w-full">
-          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
-            href="{{ route('customer.details') }}">
-            <div
-              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center fill-current stroke-0 text-center xl:p-2.5">
-              <i class="relative top-0 text-sm leading-normal text-emerald-500 ni ni-credit-card"></i>
-            </div>
-            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Customer Details</span>
-          </a>
-        </li>
-
+       
         <li class="w-full mt-4">
           <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account pages</h6>
         </li>
@@ -115,6 +127,17 @@
               <i class="relative top-0 text-sm leading-normal text-slate-700 ni ni-single-02"></i>
             </div>
             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Profile</span>
+          </a>
+        </li>
+
+        <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="{{ route('settings') }}">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-orange-500 ni ni-single-copy-04"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Settings</span>
           </a>
         </li>
 
@@ -139,6 +162,18 @@
             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
           </a>
         </li>
+        
+        <li class="mt-0.5 w-full">
+          <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
+            href="{{ route('logout') }}">
+            <div
+              class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5">
+              <i class="relative top-0 text-sm leading-normal text-cyan-500 ni ni-collection"></i>
+            </div>
+            <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Log Out</span>
+          </a>
+        </li>
+
       </ul>
     </div>
     <div class="mx-4">

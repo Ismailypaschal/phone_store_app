@@ -1,7 +1,7 @@
 @extends('layouts.admin-app')
 @section('content')
 
-  <div class="flex flex-wrap -mx-3">
+  <div class="flex flex-wrap mx-auto">
     <div class="flex-none w-full max-w-full px-3">
       <div
         class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 border-transparent border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl rounded-2xl bg-clip-border">
@@ -125,13 +125,13 @@
             </div>
           </div>
         </main>
-        {{-- <!-- Floating Action Button -->
-        <div class="fixed bottom-6 right-6">
+        <!-- Floating Action Button -->
+        {{-- <div class="fixed bottom-6 right-6">
           <button class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-white shadow-lg">
             <span class="material-symbols-outlined !text-4xl">add</span>
           </button>
         </div> --}}
-        </div>
+      </div>
     </div>
   </div>
 

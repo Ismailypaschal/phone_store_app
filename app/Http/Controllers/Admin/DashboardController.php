@@ -11,10 +11,19 @@ class DashboardController extends Controller
     {
         return view('admin.index');
     }
-    public function showTable()
+    public function showManageProducts()
     {
-        return view('admin.table');
+        return view('admin.manage_products');
     }
+    public function showAddProducts()
+    {
+        return view('admin.add_new_products');
+    }
+    public function showBrands()
+    {
+        return view('admin.brand_category');
+    }
+    
     public function showBilling()
     {
         return view('admin.billing');
@@ -30,5 +39,9 @@ class DashboardController extends Controller
     public function showCustomerDetails()
     {
         return view('admin.customer_details');
+    }
+    public function showSettings()
+    {
+        return view('admin.settings');
     }
 }

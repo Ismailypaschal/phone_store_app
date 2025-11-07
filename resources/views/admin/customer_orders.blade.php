@@ -1,7 +1,7 @@
 @extends('layouts.admin-app')
 @section('content')
 
-  <div class="flex flex-wrap -mx-3">
+  <div class="flex flex-wrap mx-auto">
     <div class="flex-none w-full max-w-full px-3">
       <div class="relative flex flex-col min-w-0 mb-6 break-words bg-white border-0 shadow-lg rounded-lg">
         <div class="p-6 pb-0 mb-0 border-b border-gray-200 rounded-t-lg">

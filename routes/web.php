@@ -48,11 +48,14 @@ Route::prefix('admin')->group(function () {
 });
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/table', [DashboardController::class, 'showTable'])->name('table');
+    Route::get('/manage_products', [DashboardController::class, 'showManageProducts'])->name('manage.products');
+    Route::get('/add_new_products', [DashboardController::class, 'showAddProducts'])->name('add.products');
+    Route::get('/add_brand', [DashboardController::class, 'showBrands'])->name('add.brand');
     Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
     Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');
     Route::get('/customer_orders', [DashboardController::class, 'showCustomerOrders'])->name('customer.orders');
     Route::get('/customer_details', [DashboardController::class, 'showCustomerDetails'])->name('customer.details');
+    Route::get('/settings', [DashboardController::class, 'showSettings'])->name('settings');
 });
 
 // Auth
