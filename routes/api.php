@@ -40,22 +40,23 @@ Route::middleware('auth')->group(
 );
 
 // Admin Routes
-Route::prefix('admin')->group(function () {
-    Route::get('/signin', [AdminSessionController::class, 'showSignin'])->name('signin');
-    Route::get('/signup', [RegisterAdminController::class, 'showSignup'])->name('signup');
-    Route::post('/signup', [RegisterAdminController::class, 'storeSignup'])->name('store.signup');
+Route::prefix('/admin')->group(function () {
+    Route::get('/signin', [AdminSessionController::class, 'showSignin']);
+    Route::post('/signin', [AdminSessionController::class, 'storeSignin']);
+    Route::get('/signup', [RegisterAdminController::class, 'showSignup']);
+    Route::post('/signup', [RegisterAdminController::class, 'storeSignup']);
 });
-Route::prefix('admin')->middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/table', [DashboardController::class, 'showTable'])->name('table');
-    Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
-    Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');
+Route::prefix('admin')->middleware('auth:admin')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('/table', [DashboardController::class, 'showTable']);
+    Route::get('/billing', [DashboardController::class, 'showBilling']);
+    Route::get('/profile', [DashboardController::class, 'showProfile']);
 });
 
 // Auth
 Route::middleware('guest')->group(function () {
-    Route::get('/login', [SessionController::class, 'showLogin'])->name('login');
-    Route::post('/login', [SessionController::class, 'storeLogin'])->name('login.post');
-    Route::get('/register', [RegisterUserController::class, 'showRegister'])->name('register');
-    Route::post('/register', [RegisterUserController::class, 'storeRegister'])->name('register.post');
+    Route::get('/login', [SessionController::class, 'showLogin']);
+    Route::post('/login', [SessionController::class, 'storeLogin']);
+    Route::get('/register', [RegisterUserController::class, 'showRegister']);
+    Route::post('/register', [RegisterUserController::class, 'storeRegister']);
 });

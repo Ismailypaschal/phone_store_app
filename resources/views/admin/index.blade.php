@@ -43,7 +43,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Today's Users</p>
+                                        Today's Revenue</p>
                                     <h5 class="mb-2 font-bold dark:text-white">2,300</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-emerald-500">+3%</span>
@@ -72,7 +72,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        New Clients</p>
+                                        Total Orders</p>
                                     <h5 class="mb-2 font-bold dark:text-white">+3,462</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-red-600">-2%</span>
@@ -101,7 +101,7 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Sales</p>
+                                        Avg. Order</p>
                                     <h5 class="mb-2 font-bold dark:text-white">$103,430</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-emerald-500">+5%</span>
@@ -206,7 +206,7 @@
                     class="relative flex flex-col min-w-0 break-words bg-white border-0 border-solid shadow-xl dark:bg-slate-850 dark:shadow-dark-xl dark:bg-gray-950 border-black-125 rounded-2xl bg-clip-border">
                     <div class="p-4 pb-0 mb-0 rounded-t-4">
                         <div class="flex justify-between">
-                            <h6 class="mb-2 dark:text-white">Sales by Country</h6>
+                            <h6 class="mb-2 dark:text-white">Best Sellers</h6>
                         </div>
                     </div>
                     <div class="overflow-x-auto">
@@ -247,15 +247,6 @@
                                             <h6 class="mb-0 text-sm leading-normal dark:text-white">$230,900</h6>
                                         </div>
                                     </td>
-                                    <td
-                                        class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                                        <div class="flex-1 text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Bounce:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">29.9%</h6>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td
@@ -289,15 +280,6 @@
                                                 class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
                                                 Value:</p>
                                             <h6 class="mb-0 text-sm leading-normal dark:text-white">$440,000</h6>
-                                        </div>
-                                    </td>
-                                    <td
-                                        class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                                        <div class="flex-1 text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Bounce:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">40.22%</h6>
                                         </div>
                                     </td>
                                 </tr>
@@ -335,15 +317,6 @@
                                             <h6 class="mb-0 text-sm leading-normal dark:text-white">$190,700</h6>
                                         </div>
                                     </td>
-                                    <td
-                                        class="p-2 text-sm leading-normal align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                                        <div class="flex-1 text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Bounce:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">23.44%</h6>
-                                        </div>
-                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="p-2 align-middle bg-transparent border-0 w-3/10 whitespace-nowrap">
@@ -376,15 +349,6 @@
                                             <h6 class="mb-0 text-sm leading-normal dark:text-white">$143,960</h6>
                                         </div>
                                     </td>
-                                    <td
-                                        class="p-2 text-sm leading-normal align-middle bg-transparent border-0 whitespace-nowrap">
-                                        <div class="flex-1 text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Bounce:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">32.14%</h6>
-                                        </div>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -395,7 +359,7 @@
                 <div
                     class="border-black/12.5 shadow-xl dark:bg-slate-850 dark:shadow-dark-xl relative flex min-w-0 flex-col break-words rounded-2xl border-0 border-solid bg-white bg-clip-border">
                     <div class="p-4 pb-0 rounded-t-4">
-                        <h6 class="mb-0 dark:text-white">Categories</h6>
+                        <h6 class="mb-0 dark:text-white">Inventory Alerts</h6>
                     </div>
                     <div class="flex-auto p-4">
                         <ul class="flex flex-col pl-0 mb-0 rounded-lg">
@@ -426,9 +390,9 @@
                                         <i class="text-white ni ni-tag relative top-0.75 text-xxs"></i>
                                     </div>
                                     <div class="flex flex-col">
-                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Tickets</h6>
-                                        <span class="text-xs leading-tight dark:text-white/80">123 closed, <span
-                                                class="font-semibold">15 open</span></span>
+                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Low Stock Items</h6>
+                                        <span class="text-xs leading-tight dark:text-white/80">Below 10 units, <span
+                                                class="font-semibold">8 open</span></span>
                                     </div>
                                 </div>
                                 <div class="flex">
@@ -446,10 +410,10 @@
                                         <i class="text-white ni ni-box-2 relative top-0.75 text-xxs"></i>
                                     </div>
                                     <div class="flex flex-col">
-                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Error logs
+                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Out of Stock
                                         </h6>
-                                        <span class="text-xs leading-tight dark:text-white/80">1 is active, <span
-                                                class="font-semibold">40 closed</span></span>
+                                        <span class="text-xs leading-tight dark:text-white/80">0 units available, <span
+                                                class="font-semibold">3 closed</span></span>
                                     </div>
                                 </div>
                                 <div class="flex">

@@ -69,28 +69,28 @@
                             <ul class="flex flex-col pl-0 mx-auto mb-0 list-none lg:flex-row xl:ml-auto">
                                 <li>
                                     <a class="flex items-center px-4 py-2 mr-2 font-normal transition-all ease-in-out lg-max:opacity-0 duration-250 text-sm text-slate-700 lg:px-2"
-                                        aria-current="page" href="../pages/dashboard.html">
+                                        aria-current="page" href="">
                                         <i class="mr-1 fa fa-chart-pie opacity-60"></i>
                                         Dashboard
                                     </a>
                                 </li>
                                 <li>
                                     <a class="block px-4 py-2 mr-2 font-normal transition-all ease-in-out lg-max:opacity-0 duration-250 text-sm text-slate-700 lg:px-2"
-                                        href="../pages/profile.html">
+                                        href="">
                                         <i class="mr-1 fa fa-user opacity-60"></i>
                                         Profile
                                     </a>
                                 </li>
                                 <li>
                                     <a class="block px-4 py-2 mr-2 font-normal transition-all ease-in-out lg-max:opacity-0 duration-250 text-sm text-slate-700 lg:px-2"
-                                        href="../pages/sign-up.html">
+                                        href="">
                                         <i class="mr-1 fas fa-user-circle opacity-60"></i>
                                         Sign Up
                                     </a>
                                 </li>
                                 <li>
                                     <a class="block px-4 py-2 mr-2 font-normal transition-all ease-in-out lg-max:opacity-0 duration-250 text-sm text-slate-700 lg:px-2"
-                                        href="../pages/sign-in.html">
+                                        href="">
                                         <i class="mr-1 fas fa-key opacity-60"></i>
                                         Sign In
                                     </a>
@@ -133,13 +133,15 @@
                                     <p class="mb-0">Enter your email and password to sign in</p>
                                 </div>
                                 <div class="flex-auto p-6">
-                                    <form role="form">
+                                    <form role="form" method="POST" action="{{ route('store.signin') }}">
+                                        @error('email')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
+                                        @csrf
                                         <div class="mb-4">
-                                            <input type="email" placeholder="Email"
+                                            <input name="email" type="email" placeholder="Email"
                                                 class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" />
                                         </div>
                                         <div class="mb-4">
-                                            <input type="password" placeholder="Password"
+                                            <input name="password" type="password" placeholder="Password"
                                                 class="focus:shadow-primary-outline dark:bg-gray-950 dark:placeholder:text-white/80 dark:text-white/80 text-sm leading-5.6 ease block w-full appearance-none rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding p-3 font-normal text-gray-700 outline-none transition-all placeholder:text-gray-500 focus:border-fuchsia-300 focus:outline-none" />
                                         </div>
                                         <div class="flex items-center pl-12 mb-0.5 text-left min-h-6">
@@ -151,7 +153,7 @@
                                                 for="rememberMe">Remember me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button"
+                                            <button type="submit"
                                                 class="inline-block w-full px-16 py-3.5 mt-6 mb-0 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25">Sign
                                                 in</button>
                                         </div>
@@ -160,7 +162,7 @@
                                 <div
                                     class="border-black/12.5 rounded-b-2xl border-t-0 border-solid p-6 text-center pt-0 px-1 sm:px-6">
                                     <p class="mx-auto mb-6 leading-normal text-sm">Don't have an account? <a
-                                            href="../pages/sign-up.html"
+                                            href=""
                                             class="font-semibold text-transparent bg-clip-text bg-gradient-to-tl from-blue-500 to-violet-500">Sign
                                             up</a></p>
                                 </div>
@@ -230,7 +232,7 @@
     </footer>
 </body>
 <!-- plugin for scrollbar  -->
-<script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script>
+{{-- <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}" async></script> --}}
 <script src="{{ asset('assets/js/perfect-scrollbar.js') }}" async></script>
 <!-- main script file  -->
 <script src="{{ asset('assets/js/argon-dashboard-tailwind.js') }}" async></script>
