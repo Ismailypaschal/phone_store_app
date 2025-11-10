@@ -59,7 +59,7 @@
           @endforeach
 
           <!-- Pagination -->
-          <div class="mt-4 px-4 pb-8">
+          <div class="mt-4 mb-4 px-4 pb-8">
             @if(method_exists($products, 'links'))
               <div class="flex justify-center">
                 {{ $products->links() }}
