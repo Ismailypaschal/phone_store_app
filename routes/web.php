@@ -30,6 +30,7 @@ Route::middleware('auth')->group(
         // Route::get('/pay', [PaymentController::class, 'pay'])->name('payment.page');
         Route::get('/pay', [PaymentController::class, 'processPayment'])->name('payment.process');
         Route::get('/payment/callback', [PaymentController::class, 'handleGatewayCallback'])->name('payment.callback');
+        Route::get('/payment/success/{order}', [PaymentController::class, 'paymentSuccess'])->name('payment.success');
         Route::any('/flutter/pay', [FlutterPaymentController::class, 'pay_with_flutter'])->name('flutter_payment.page');
         Route::post('verify-flutter_payment', [FlutterPaymentController::class, 'verifyPayment'])->name('flutter_payment.verify');
         Route::get('/payment/success/{reference}', [FlutterPaymentController::class, 'showPaymentDetails'])

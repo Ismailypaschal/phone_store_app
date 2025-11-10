@@ -14,8 +14,8 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Today's Money</p>
-                                    <h5 class="mb-2 font-bold dark:text-white">$53,000</h5>
+                                        Total Revenue</p>
+                                    <h5 class="mb-2 font-bold dark:text-white">${{ number_format($totalRevenue, 2) }}</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-emerald-500">+55%</span>
                                         since yesterday
@@ -43,8 +43,8 @@
                                 <div>
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
-                                        Today's Revenue</p>
-                                    <h5 class="mb-2 font-bold dark:text-white">2,300</h5>
+                                        New customers</p>
+                                    <h5 class="mb-2 font-bold dark:text-white">{{ $newCustomer }}</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-emerald-500">+3%</span>
                                         since last week
@@ -73,7 +73,7 @@
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Total Orders</p>
-                                    <h5 class="mb-2 font-bold dark:text-white">+3,462</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white">+{{ $orderCount }}</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-red-600">-2%</span>
                                         since last quarter
@@ -102,7 +102,7 @@
                                     <p
                                         class="mb-0 font-sans text-sm font-semibold leading-normal uppercase dark:text-white dark:opacity-60">
                                         Avg. Order</p>
-                                    <h5 class="mb-2 font-bold dark:text-white">$103,430</h5>
+                                    <h5 class="mb-2 font-bold dark:text-white">${{ number_format($avgOrder, 2) }}</h5>
                                     <p class="mb-0 dark:text-white dark:opacity-60">
                                         <span class="text-sm font-bold leading-normal text-emerald-500">+5%</span>
                                         than last month
@@ -390,7 +390,8 @@
                                         <i class="text-white ni ni-tag relative top-0.75 text-xxs"></i>
                                     </div>
                                     <div class="flex flex-col">
-                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Low Stock Items</h6>
+                                        <h6 class="mb-1 text-sm leading-normal text-slate-700 dark:text-white">Low Stock
+                                            Items</h6>
                                         <span class="text-xs leading-tight dark:text-white/80">Below 10 units, <span
                                                 class="font-semibold">8 open</span></span>
                                     </div>

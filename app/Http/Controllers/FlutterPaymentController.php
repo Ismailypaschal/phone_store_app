@@ -49,6 +49,7 @@ class FlutterPaymentController extends Controller
                         try {
                             $payment = Payment::create([
                                 'order_id' => $order->id,
+                                'user_id' => $order->user_id,
                                 'payment_method' => 'flutterwave',
                                 'amount' => $amount,
                                 'status' => 'paid',

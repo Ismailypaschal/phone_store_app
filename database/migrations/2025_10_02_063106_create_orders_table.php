@@ -43,6 +43,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Order::class)->constrained()->cascadeOnDelete();
+            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
             $table->enum('payment_method', ['bank_transfer', 'card', 'paystack', 'flutterwave']);
             $table->string('transaction_id');
             $table->decimal('amount', 8, 2);

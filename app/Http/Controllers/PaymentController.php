@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use App\Mail\OrderConfirmationMail;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\User;
 
 
 class PaymentController extends Controller
@@ -55,6 +57,7 @@ class PaymentController extends Controller
                 $status = $result && $result->status ? 'paid' : 'failed';
                 $payment = Payment::create([
                     'order_id' => $order->id,
+                    'user_id' => $order->user_id,
                     'payment_method' => 'paystack',
                     'amount' => $data->amount / 100, // Convert back to Naira
                     'status' => 'paid',
@@ -64,7 +67,9 @@ class PaymentController extends Controller
                 if ($status === 'paid') {
                     // Send confirmation email
                     Mail::to($order->customer_email)->queue(new OrderConfirmationMail($order));
-                    return view('pays.paymentcallback')->with(compact('order', 'data'));
+                    // PRG: Redirect to GET success page (no resubmit risk)
+                    return redirect()->route('payment.success', $order->id)
+                        ->with('success', 'Payment successful! Order confirmed.');
                 } else {
                     return back()->withError($result->message ?? "Something went wrong, please try again later");
                 }
@@ -74,13 +79,26 @@ class PaymentController extends Controller
                     'error' => $e->getMessage(),
                     'trace' => $e->getTraceAsString()
                 ]);
+                return back()->withErrors(['error' => 'Payment processing failed: ' . $e->getMessage()]);
             }
-
-            return view('pays.paymentcallback')->with(compact('order', 'data'));
         } else {
             Log::error('Payment verification failed', ['message' => $result->message]);
             return back()->withError($result->message);
         }
+    }
+    public function paymentSuccess(Order $order)
+    {
+        $order = Order::findOrFail($order->id);
+        $payment = Payment::where('order_id', $order->id)->latest()->first();
+        $response = $this->verifyPayment($order->reference);
+        Log::info('Payment verification response on success page', ['response' => $response]);
+        $result = json_decode($response);
+        $data = $result ? $result->data ?? null : null;
+        if (!$payment || !$data) {
+            Log::warning('Redirecting due to missing data', ['has_payment' => !!$payment, 'has_data' => !!$data]);
+            return redirect()->route('store.index')->with('error', 'Order not found.');
+        }
+        return view('pays.paymentcallback', compact('order', 'data', 'payment'));
     }
     public function processPayment()
     {

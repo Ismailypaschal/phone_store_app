@@ -41,7 +41,7 @@
         <img src="{{ asset('assets/img/logo-ct.png') }}"
           class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-8"
           alt="main_logo" />
-        <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand">Argon Dashboard 2</span>
+        <span class="ml-1 font-semibold transition-all duration-200 ease-nav-brand text-xl">Phone Store</span>
       </a>
     </div>
 
@@ -61,7 +61,7 @@
           </a>
         </li>
 
-         <li class="mt-0.5 w-full">
+        <li class="mt-0.5 w-full">
           <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
             href="{{ route('customer.orders') }}">
             <div
@@ -114,7 +114,7 @@
             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Billing</span>
           </a>
         </li>
-       
+
         <li class="w-full mt-4">
           <h6 class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60">Account pages</h6>
         </li>
@@ -162,7 +162,7 @@
             <span class="ml-1 duration-300 opacity-100 pointer-events-none ease">Sign Up</span>
           </a>
         </li>
-        
+
         <li class="mt-0.5 w-full">
           <a class=" dark:text-white dark:opacity-80 py-2.7 text-sm ease-nav-brand my-0 mx-2 flex items-center whitespace-nowrap px-4 transition-colors"
             href="{{ route('logout') }}">
@@ -519,6 +519,7 @@
   </div>
   <!-- javascript Start -->
   <!-- plugin for charts  -->
+  <script src="{{ asset('assets/js/plugins/Chart.extension.js') }}" async></script>
   <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}" async></script>
   <script src="{{ asset('assets/js/charts.js') }}" async></script>
   <!-- plugin for scrollbar  -->
@@ -526,11 +527,16 @@
   <script src="{{ asset('assets/js/perfect-scrollbar.js') }}" async></script>
   <!-- main script file  -->
   <script src="{{ asset('assets/js/argon-dashboard-tailwind.js') }}?v=1.0.1"></script>
+  <script src="{{ asset('assets/js/argon-dashboard-tailwind.min.js') }}?v=1.0.1"></script>
 
 
   <script src="{{ asset('assets/js/sidenav-burger.js') }}"></script>
 
   <script src="{{ asset('assets/js/navbar-sticky.js') }}"></script>
+  <script src="{{ asset('assets/js/carousel.js') }}"></script>
+  <script src="{{ asset('assets/js/dropdown.js') }}"></script>
+  <script src="{{ asset('assets/js/tooltips.js') }}"></script>
+  <script src="{{ asset('assets/js/fixed-plugin.js') }}"></script>
 
 
   <script src="{{ asset('assets/js/navbar-collapse.js') }}"></script>
