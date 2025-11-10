@@ -37,11 +37,25 @@ class DashboardController extends Controller
             ->whereBetween('first_paid_at', [$start, $end])
             ->count();
 
-        return view('admin.index', compact('orderCount', 'totalRevenue', 'avgOrder', 'newCustomer', 'start', 'end'));
+        $bestSellers = DB::table('order_items as oi')
+            ->join('orders as o', 'oi.order_id', '=', 'o.id')
+            ->select(
+                'oi.product_id',
+                'oi.product_name',
+                DB::raw('SUM(oi.quantity) as total_quantity'),
+                DB::raw('SUM(oi.quantity * oi.price_at_purchase) as total_sales')
+            )
+            ->groupBy('oi.product_id', 'oi.product_name')
+            ->orderByDesc('total_quantity')
+            ->limit(5)
+            ->get();
+
+        return view('admin.index', compact('orderCount', 'totalRevenue', 'avgOrder', 'newCustomer', 'start', 'end', 'bestSellers'));
     }
     public function showManageProducts()
     {
-        return view('admin.manage_products');
+        $products = Products::orderBy('created_at', 'desc')->paginate(10);
+        return view('admin.manage_products', compact('products'));
     }
     public function showAddProducts()
     {

@@ -213,42 +213,50 @@
                         <table
                             class="items-center w-full mb-4 align-top border-collapse border-gray-200 dark:border-white/40">
                             <tbody>
-                                <tr>
-                                    <td
-                                        class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
-                                        <div class="flex items-center px-2 py-1">
-                                            <div>
-                                                <img src="{{ asset('assets/img/icons/flags/US.png') }}"
-                                                    alt="Country flag" />
+                                @foreach ($bestSellers as $bestSeller)
+                                    <tr>
+                                        <td
+                                            class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
+                                            <div class="flex items-center px-2 py-1">
+                                                <div>
+                                                    <img src="https://picsum.photos/600/400?random={{ $bestSeller->product_id }}"
+                                                        alt="Country flag" class="w-10" />
+                                                </div>
+                                                <div class="ml-6">
+                                                    <p
+                                                        class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
+                                                        Phone:</p>
+                                                    <h6 class="mb-0 text-sm leading-normal dark:text-white">
+                                                        {{ $bestSeller->product_name }}
+                                                    </h6>
+                                                </div>
                                             </div>
-                                            <div class="ml-6">
+                                        </td>
+                                        <td
+                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                                            <div class="text-center">
                                                 <p
                                                     class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                    Country:</p>
-                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">United States</h6>
+                                                    Sales:</p>
+                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">
+                                                    {{ $bestSeller->total_quantity }}
+                                                </h6>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td
-                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                                        <div class="text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Sales:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">2500</h6>
-                                        </div>
-                                    </td>
-                                    <td
-                                        class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
-                                        <div class="text-center">
-                                            <p
-                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
-                                                Value:</p>
-                                            <h6 class="mb-0 text-sm leading-normal dark:text-white">$230,900</h6>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
+                                        </td>
+                                        <td
+                                            class="p-2 align-middle bg-transparent border-b whitespace-nowrap dark:border-white/40">
+                                            <div class="text-center">
+                                                <p
+                                                    class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-60">
+                                                    Value:</p>
+                                                <h6 class="mb-0 text-sm leading-normal dark:text-white">
+                                                    ${{ $bestSeller->total_sales }}</h6>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                                {{-- <tr>
                                     <td
                                         class="p-2 align-middle bg-transparent border-b w-3/10 whitespace-nowrap dark:border-white/40">
                                         <div class="flex items-center px-2 py-1">
@@ -349,7 +357,7 @@
                                             <h6 class="mb-0 text-sm leading-normal dark:text-white">$143,960</h6>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>

@@ -31,98 +31,40 @@
         <!-- Product List -->
         <main class="flex-1 gap-5 px-4 pb-24">
           <!-- List Item 1 -->
-          <div
-            class="flex mb-6 gap-4 bg-white dark:bg-slate-800 p-3 justify-between rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px] shrink-0"
-                data-alt="Image of a silver smartphone"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlYCMiK7GNx7AeIlaNnKLMSoQ9F3kqmPIYKjlwOfdz_BQ40LwZ12cdGpfT4gN_ygCh-u434uvyvN5FCjKytj3LtNkVNKa9RBumBSBn75giTStAfJSgdoZaJ9KL9q68KGlCXVofiiHJb5e_7A-Ecpz9TYr3Ua_pyqU8g6pS702AdR7xd-o09owF-krKmnKSta-zjOysNeJHl3mbmUGZzpCY-nrQRIUzTrvSXRSk_CRthKK2ETIf4DriFwZDUwrIuuFuGBZYAvhKDREa");'>
-              </div>
-              <div class="flex flex-1 flex-col justify-center gap-1">
-                <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">iPhone 15 Pro - 256GB</p>
-                <div class="flex items-center gap-1.5">
-                  <span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-                  <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Active</p>
+          @foreach ($products as $product)
+            <div
+              class="flex mb-6 gap-4 bg-white dark:bg-slate-800 p-3 justify-between rounded-xl border border-slate-200 dark:border-slate-700">
+              <div class="flex items-center gap-4">
+                <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px] shrink-0"
+                  data-alt="Image of a silver smartphone"
+                  style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBlYCMiK7GNx7AeIlaNnKLMSoQ9F3kqmPIYKjlwOfdz_BQ40LwZ12cdGpfT4gN_ygCh-u434uvyvN5FCjKytj3LtNkVNKa9RBumBSBn75giTStAfJSgdoZaJ9KL9q68KGlCXVofiiHJb5e_7A-Ecpz9TYr3Ua_pyqU8g6pS702AdR7xd-o09owF-krKmnKSta-zjOysNeJHl3mbmUGZzpCY-nrQRIUzTrvSXRSk_CRthKK2ETIf4DriFwZDUwrIuuFuGBZYAvhKDREa");'>
                 </div>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">$999.00 • 52 in stock</p>
-              </div>
-            </div>
-            <div class="shrink-0 flex items-center">
-              <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
-                <span class="material-symbols-outlined">more_vert</span>
-              </button>
-            </div>
-          </div>
-          <!-- List Item 2 -->
-          <div
-            class="flex mb-6 gap-4 bg-white dark:bg-slate-800 p-3 justify-between rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px] shrink-0"
-                data-alt="Image of a blue smartphone"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAzzRVUEZamh5iVu5QMV8yvhQFfJr16w_O_FSkyod79G-wwS9dH0qb1EScMPONlvMfaI-IilqRzlUYLguB1uIPlRSAPT_QoWpiRcALx0WqOWI0o_BdJIGSF5S2sjWJKPTl4CY26eiSSXLuiaE8R0A1jCsvyfb7zgEcLifVvnZ0e0sw7u0Wk7PPggiPXExJoPQewl-FOZfnDl0ONNaK3Sf4TKkoEPznNEsYWPhmJNFzKEpEi7neRddJbYq8p3oVH9yl9RhBfG6kwrMiy");'>
-              </div>
-              <div class="flex flex-1 flex-col justify-center gap-1">
-                <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">Google Pixel 8 - 128GB</p>
-                <div class="flex items-center gap-1.5">
-                  <span class="inline-block h-2 w-2 rounded-full bg-yellow-500"></span>
-                  <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Low Stock</p>
+                <div class="flex flex-1 flex-col justify-center gap-1">
+                  <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">{{ $product->name }} -
+                    {{ $product->storage}}GB</p>
+                  <div class="flex items-center gap-1.5">
+                    <span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Active</p>
+                  </div>
+                  <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">${{ $product->price  }}•
+                    {{ $product->quantity }} in stock</p>
                 </div>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">$699.00 • 12 in stock</p>
+              </div>
+              <div class="shrink-0 flex items-center">
+                <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
+                  <span class="material-symbols-outlined">more_vert</span>
+                </button>
               </div>
             </div>
-            <div class="shrink-0 flex items-center">
-              <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
-                <span class="material-symbols-outlined">more_vert</span>
-              </button>
-            </div>
-          </div>
-          <!-- List Item 3 -->
-          <div
-            class="flex mb-6 gap-4 bg-white dark:bg-slate-800 p-3 justify-between rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px] shrink-0"
-                data-alt="Image of a dark grey smartphone"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAp4Y12SNR_wEdtxbRe0oLkbgQkvAPAMe0gVBk9rN4x6wCAe7FRfdu7su8JmPKlBE9JfL6l7EHRc7dAbPiSLsxJ8g-Czh7xf3R4f4hTrzppT7ao_nC019Ts5TjY5IDkhlkD2MSA2CtPBwMOiKIjlgRB-3XxMzrEIOXUZRE8NtVdJ93-wLiaBbV7rk1mUkPF-Wb52-LphsrGfYjmVvtG9MdEqrUoeOTQu_aMmmTgEgJJvK_GNH1pWf3_RuG160z9pvXG-iEnveCQXKC1");'>
+          @endforeach
+
+          <!-- Pagination -->
+          <div class="mt-4 px-4 pb-8">
+            @if(method_exists($products, 'links'))
+              <div class="flex justify-center">
+                {{ $products->links() }}
               </div>
-              <div class="flex flex-1 flex-col justify-center gap-1">
-                <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">Samsung S24 Ultra - 512GB
-                </p>
-                <div class="flex items-center gap-1.5">
-                  <span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>
-                  <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Out of Stock</p>
-                </div>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">$1299.00 • 0 in stock</p>
-              </div>
-            </div>
-            <div class="shrink-0 flex items-center">
-              <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
-                <span class="material-symbols-outlined">more_vert</span>
-              </button>
-            </div>
-          </div>
-          <!-- List Item 4 -->
-          <div
-            class="flex mb-6 gap-4 bg-white dark:bg-slate-800 p-3 justify-between rounded-xl border border-slate-200 dark:border-slate-700">
-            <div class="flex items-center gap-4">
-              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-lg size-[70px] shrink-0"
-                data-alt="Image of a black smartphone"
-                style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAV1J9jHQa_zobqiGPYFozJ-wgEf_3zHFgG_xPmTV2Q58GT_oNZyLY8gmy0y6hJCGkYQjJ1Y_M-CKbVef65YlydDasHLoxEjJ_hXLDGrjSY2lrfGPCWM4wNioNKMNVedL14VI0M8ZBF8YjpOycTu8wNo2ik0ZTx8U7ZndXq_XKX_yKZvuCAVBEwnmtxcJ4wM1H-vLGAAIixqBmBVsA9S6sOmXiJcmcl-N1LZpUW_JiXW4Q1mBBTf3dkhuB60aFXI3UqITMIWOj81uSG");'>
-              </div>
-              <div class="flex flex-1 flex-col justify-center gap-1">
-                <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">Nothing Phone (2) - 256GB
-                </p>
-                <div class="flex items-center gap-1.5">
-                  <span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
-                  <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">Active</p>
-                </div>
-                <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">$599.00 • 35 in stock</p>
-              </div>
-            </div>
-            <div class="shrink-0 flex items-center">
-              <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
-                <span class="material-symbols-outlined">more_vert</span>
-              </button>
-            </div>
+            @endif
           </div>
         </main>
         <!-- Floating Action Button -->
