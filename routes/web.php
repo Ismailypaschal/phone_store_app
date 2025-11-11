@@ -50,6 +50,7 @@ Route::prefix('admin')->group(function () {
 Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/manage_products', [DashboardController::class, 'showManageProducts'])->name('manage.products');
+    Route::get('/search_products', [DashboardController::class, 'searchProducts'])->name('search.products');
     Route::get('/add_new_products', [DashboardController::class, 'showAddProducts'])->name('add.products');
     Route::get('/add_brand', [DashboardController::class, 'showBrands'])->name('add.brand');
     Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');

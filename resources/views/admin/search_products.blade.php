@@ -20,7 +20,7 @@
                   </div>
                   <input
                     class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-r-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:border-primary h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-4 pl-2 text-base font-normal leading-normal"
-                    placeholder="Search by name or model" value="" name="query" />
+                    placeholder="Search by name or model" value="{{ request('query') }}" name="query" />
                 </div>
               </label>
               <button
@@ -63,24 +63,26 @@
           @endforeach
 
           <!-- Pagination -->
-          <div class="mt-4 mb-4 px-4 pb-8">
-            @if(method_exists($products, 'links'))
-              <div class="flex justify-center">
-                {{ $products->appends(request()->except('page'))->links() }}
-              </div>
+            <div class="mt-4 mb-4 px-4 pb-8">
+              @if(method_exists($products, 'links'))
+                <div class="flex justify-center">
+                  {{ $products->appends(request()->except('page'))->links() }}
+                </div>
+              @endif
+            </div>
+            @if ($products->isEmpty())
+              <p class="text-gray-500 text-center h-full">No products found for "{{ $query }}".</p>
             @endif
-          </div>
-          @if ($products->isEmpty())
-            <p class="text-gray-500 text-center h-full">No products found for "{{ $query }}".</p>
-          @endif
-        </main>
-        <!-- Floating Action Button -->
-        {{-- <div class="fixed bottom-6 right-6">
-          <button class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-white shadow-lg">
-            <span class="material-symbols-outlined !text-4xl">add</span>
-          </button>
-        </div> --}}
       </div>
+      </main>
+      <!-- Floating Action Button -->
+      {{-- <div class="fixed bottom-6 right-6">
+        <button class="flex h-16 w-16 items-center justify-center rounded-full bg-primary text-white shadow-lg">
+          <span class="material-symbols-outlined !text-4xl">add</span>
+        </button>
+      </div> --}}
     </div>
   </div>
+  </div>
+
 @endsection

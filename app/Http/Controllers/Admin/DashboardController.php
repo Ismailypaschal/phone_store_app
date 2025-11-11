@@ -57,9 +57,34 @@ class DashboardController extends Controller
         $products = Products::orderBy('created_at', 'desc')->paginate(10);
         return view('admin.manage_products', compact('products'));
     }
+    public function searchProducts(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Products::where('name', 'LIKE', "%{$query}%")
+            ->orWhere('description', 'LIKE', "%{$query}%")
+            ->orWhere('storage', 'LIKE', "%{$query}%")
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        // Preserve the search query on pagination links
+        $products->appends($request->only('query'));
+
+        return view('admin.search_products', compact('products', 'query'));
+    }
     public function showAddProducts()
     {
         return view('admin.add_new_products');
+    }
+    public function showCustomerOrders()
+    {
+        $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+
+        return view('admin.customer_orders', compact('orders'));
+    }
+    public function showCustomerDetails()
+    {
+        return view('admin.customer_details');
     }
     public function showBrands()
     {
@@ -73,14 +98,6 @@ class DashboardController extends Controller
     public function showProfile()
     {
         return view('admin.profile');
-    }
-    public function showCustomerOrders()
-    {
-        return view('admin.customer_orders');
-    }
-    public function showCustomerDetails()
-    {
-        return view('admin.customer_details');
     }
     public function showSettings()
     {
