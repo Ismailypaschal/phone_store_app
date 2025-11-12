@@ -56,8 +56,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
     Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');
     Route::get('/customer_orders', [DashboardController::class, 'showCustomerOrders'])->name('customer.orders');
-    Route::get('/customer_details', [DashboardController::class, 'showCustomerDetails'])->name('customer.details');
+    Route::get('/customer_details/{user_id}', [DashboardController::class, 'showCustomerDetails'])->name('customer.details');
     Route::get('/settings', [DashboardController::class, 'showSettings'])->name('settings');
+    Route::post('/logout', [AdminSessionController::class, 'destroy'])->name('admin.logout');
 });
 
 // Auth

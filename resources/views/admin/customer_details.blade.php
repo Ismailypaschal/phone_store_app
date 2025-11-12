@@ -132,9 +132,9 @@
                                     <img src="{{ asset('assets/img/shapes/ceo.jpg') }}" class="h-20 w-20 rounded-full">
                                 </div>
                                 <div>
-                                    <p class="text-gray-900 text-xl font-bold leading-tight">Alexandre Dupont</p>
-                                    <p class="text-gray-600 text-sm">alex.dupont@email.com</p>
-                                    <p class="text-gray-600 text-sm">+1-202-555-0125</p>
+                                    <p class="text-gray-900 text-xl font-bold leading-tight">{{ $user->name }}</p>
+                                    <p class="text-gray-600 text-sm">{{ $user->email }}</p>
+                                    <p class="text-gray-600 text-sm">{{ $user->phone ?? '—' }}</p>
                                 </div>
                             </div>
                             <button class="h-10 px-4 bg-gray-200 text-gray-900 font-bold rounded-lg text-sm">
@@ -175,62 +175,35 @@
 
                     <!-- List Items -->
                     <div class="flex flex-col">
-                        <!-- List Item 1 -->
-                        <div class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
-                                    <i class="fa-solid fa-receipt fa-xl"></i>
+                        @if(isset($orders) && $orders->count())
+                            @foreach($orders as $order)
+                                <div class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
+                                    <div class="flex items-start gap-4">
+                                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
+                                            <i class="fa-solid fa-receipt fa-xl"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-gray-900 text-base font-bold">Order #{{ $order->id }}</p>
+                                            <p class="text-gray-500 text-sm">{{ $order->created_at->format('M d, Y') }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col items-end">
+                                        <p class="text-gray-900 text-base font-bold">${{ number_format($order->total_price, 2) }}</p>
+                                        <span class="px-2 py-1 text-xs font-medium rounded-full {{ $order->order_status === 'delivered' ? 'bg-green-100 text-green-700' : ($order->order_status === 'shipped' ? 'bg-orange-100 text-orange-700' : ($order->order_status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700')) }}">{{ ucfirst($order->order_status) }}</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-gray-900 text-base font-bold">Order #120594</p>
-                                    <p class="text-gray-500 text-sm">Oct 24, 2023</p>
-                                </div>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <p class="text-gray-900 text-base font-bold">$1199.00</p>
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-green-100 text-green-700 rounded-full">Delivered</span>
-                            </div>
-                        </div>
+                            @endforeach
 
-                        <!-- List Item 2 -->
-                        <div class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
-                                    <i class="fa-solid fa-receipt fa-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-900 text-base font-bold">Order #119843</p>
-                                    <p class="text-gray-500 text-sm">Sep 15, 2023</p>
-                                </div>
+                            <div class="mt-4 mb-4 px-4 pb-8">
+                                @if(method_exists($orders, 'links'))
+                                    <div class="flex justify-center">
+                                        {{ $orders->links() }}
+                                    </div>
+                                @endif
                             </div>
-                            <div class="flex flex-col items-end">
-                                <p class="text-gray-900 text-base font-bold">$850.50</p>
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-orange-100 text-orange-700 rounded-full">Shipped</span>
-                            </div>
-                        </div>
-
-                        <!-- List Item 3 -->
-                        <div class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
-                            <div class="flex items-start gap-4">
-                                <div
-                                    class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
-                                    <i class="fa-solid fa-receipt fa-xl"></i>
-                                </div>
-                                <div>
-                                    <p class="text-gray-900 text-base font-bold">Order #119210</p>
-                                    <p class="text-gray-500 text-sm">Sep 01, 2023</p>
-                                </div>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <p class="text-gray-900 text-base font-bold">$400.25</p>
-                                <span
-                                    class="px-2 py-1 text-xs font-medium bg-red-100 text-red-700 rounded-full">Cancelled</span>
-                            </div>
-                        </div>
+                        @else
+                            <p class="text-gray-500 text-center h-full">No orders found for this customer.</p>
+                        @endif
                     </div>
                 </main>
 

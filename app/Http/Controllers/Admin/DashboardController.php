@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Products;
 use App\Models\Order;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -78,13 +79,37 @@ class DashboardController extends Controller
     }
     public function showCustomerOrders()
     {
-        $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+        $status = request()->query('status');
+        $orders = Order::when($status, function ($query, $status) {
+            return $query->where('order_status', $status);
+        })
+            ->orderBy('created_at', 'desc')->paginate(15);
+        // $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+        // $orderProcessing = Order::where('order_status', 'processing')
+        // ->orderBy('created_at', 'desc')->paginate(15);
+        // $orderConfirmed = Order::where('order_status', 'confirmed')
+        // ->orderBy('created_at', 'desc')->paginate(15);
+        // $orderShipped = Order::where('order_status', 'shipped')
+        // ->orderBy('created_at', 'desc')->paginate(15);
+        // $orderDelivered = Order::where('order_status', 'delivered')
+        // ->orderBy('created_at', 'desc')->paginate(15);
+        // $orderCancelled = Order::where('order_status', 'cancelled')
+        // ->orderBy('created_at', 'desc')->paginate(15);
 
-        return view('admin.customer_orders', compact('orders'));
+
+        return view('admin.customer_orders', compact('orders', 'status'));
     }
-    public function showCustomerDetails()
+    public function showCustomerDetails($user_id)
     {
-        return view('admin.customer_details');
+        // Load the user or fail
+        $user = User::findOrFail($user_id);
+
+        // Paginate orders for this user
+        $orders = Order::where('user_id', $user_id)
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+
+        return view('admin.customer_details', compact('user', 'orders'));
     }
     public function showBrands()
     {

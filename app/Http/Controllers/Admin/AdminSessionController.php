@@ -56,4 +56,10 @@ class AdminSessionController extends Controller
         //     'message' => 'Admin logged in successfully!',
         // ], 201);
     }
+    public  function destroy(Request $request) {
+        Auth::guard('admin')->logout();
+        // $request->session()->invalidate();
+        // $request->session()->regenerateToken();
+        return redirect('/admin/signin');
+    }
 }
