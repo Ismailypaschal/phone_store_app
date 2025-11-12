@@ -147,15 +147,15 @@
                     <div class="flex flex-wrap space-x-4 p-4">
                         <div class="flex flex-1 flex-col min-w-[158px] bg-gray-100 border border-gray-300 rounded-lg p-4">
                             <p class="text-gray-600 text-sm font-medium">Total Spent</p>
-                            <p class="text-gray-900 text-2xl font-bold">$2,450.75</p>
+                            <p class="text-gray-900 text-2xl font-bold">${{ $summary->total_spent }}</p>
                         </div>
                         <div class="flex flex-1 flex-col min-w-[158px] bg-gray-100 border border-gray-300 rounded-lg p-4">
                             <p class="text-gray-600 text-sm font-medium">Total Orders</p>
-                            <p class="text-gray-900 text-2xl font-bold">12</p>
+                            <p class="text-gray-900 text-2xl font-bold">{{ $summary->order_count }}</p>
                         </div>
                         <div class="flex flex-1 flex-col min-w-[158px] bg-gray-100 border border-gray-300 rounded-lg p-4">
                             <p class="text-gray-600 text-sm font-medium">Last Active</p>
-                            <p class="text-gray-900 text-2xl font-bold">2 days ago</p>
+                            <p class="text-gray-900 text-2xl font-bold">{{ \Carbon\Carbon::parse($summary->last_order_at)->format('M d, Y g:i A') }}</p>
                         </div>
                     </div>
 
@@ -175,11 +175,13 @@
 
                     <!-- List Items -->
                     <div class="flex flex-col">
-                        @if(isset($orders) && $orders->count())
-                            @foreach($orders as $order)
-                                <div class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
+                        @if (isset($orders) && $orders->count())
+                            @foreach ($orders as $order)
+                                <div
+                                    class="flex justify-between items-center gap-4 bg-white px-4 py-3 border-b border-gray-300">
                                     <div class="flex items-start gap-4">
-                                        <div class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
+                                        <div
+                                            class="flex items-center justify-center h-12 w-12 rounded-lg bg-gray-100 text-gray-900">
                                             <i class="fa-solid fa-receipt fa-xl"></i>
                                         </div>
                                         <div>
@@ -188,14 +190,16 @@
                                         </div>
                                     </div>
                                     <div class="flex flex-col items-end">
-                                        <p class="text-gray-900 text-base font-bold">${{ number_format($order->total_price, 2) }}</p>
-                                        <span class="px-2 py-1 text-xs font-medium rounded-full {{ $order->order_status === 'delivered' ? 'bg-green-100 text-green-700' : ($order->order_status === 'shipped' ? 'bg-orange-100 text-orange-700' : ($order->order_status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700')) }}">{{ ucfirst($order->order_status) }}</span>
+                                        <p class="text-gray-900 text-base font-bold">
+                                            ${{ number_format($order->total_price, 2) }}</p>
+                                        <span
+                                            class="px-2 py-1 text-xs font-medium rounded-full {{ $order->order_status === 'delivered' ? 'bg-green-100 text-green-700' : ($order->order_status === 'shipped' ? 'bg-orange-100 text-orange-700' : ($order->order_status === 'cancelled' ? 'bg-red-100 text-red-700' : 'bg-yellow-100 text-yellow-700')) }}">{{ ucfirst($order->order_status) }}</span>
                                     </div>
                                 </div>
                             @endforeach
 
                             <div class="mt-4 mb-4 px-4 pb-8">
-                                @if(method_exists($orders, 'links'))
+                                @if (method_exists($orders, 'links'))
                                     <div class="flex justify-center">
                                         {{ $orders->links() }}
                                     </div>

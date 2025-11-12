@@ -84,7 +84,7 @@ class DashboardController extends Controller
             return $query->where('order_status', $status);
         })
             ->orderBy('created_at', 'desc')->paginate(15);
-        // $orders = Order::orderBy('created_at', 'desc')->paginate(15);
+
         // $orderProcessing = Order::where('order_status', 'processing')
         // ->orderBy('created_at', 'desc')->paginate(15);
         // $orderConfirmed = Order::where('order_status', 'confirmed')
@@ -104,12 +104,22 @@ class DashboardController extends Controller
         // Load the user or fail
         $user = User::findOrFail($user_id);
 
-        // Paginate orders for this user
+        // Paginate orders for this user (for listing)
         $orders = Order::where('user_id', $user_id)
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('admin.customer_details', compact('user', 'orders'));
+        // Summary stats for this user (aggregate values)
+        $summary = DB::table('orders')
+            ->where('user_id', $user_id)
+            ->select(
+                DB::raw('SUM(total_price) as total_spent'),
+                DB::raw('COUNT(id) as order_count'),
+                DB::raw('MAX(created_at) as last_order_at')
+            )
+            ->first();
+
+        return view('admin.customer_details', compact('user', 'orders', 'summary'));
     }
     public function showBrands()
     {
