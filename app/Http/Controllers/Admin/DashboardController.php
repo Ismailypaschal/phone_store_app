@@ -172,7 +172,12 @@ class DashboardController extends Controller
             $filePath = $file->storeAs('products', $filename, 'public');
             $data['img_path'] = '/storage/' . $filePath;
         }
-        $product = Products::findOrFail($id);
+        // Ensure we have a product id (use the parameter when available, otherwise try route or input)
+        $prodId = $id ?? request()->route('id') ?? request()->input('id');
+        if (!$prodId) {
+            abort(404);
+        }
+        $product = Products::findOrFail($prodId);
         $product->update($data);
         return redirect()->route('manage.products')->with('success', 'Product updated successfully!');
     }

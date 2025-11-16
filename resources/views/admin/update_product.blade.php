@@ -4,9 +4,10 @@
         <div class="w-full px-3">
             <div class="relative flex flex-col bg-white border border-gray-300 shadow-lg rounded-lg p-6">
 
-                <h2 class="text-lg font-semibold text-gray-800 mb-4">Add New Product</h2>
+                <h2 class="text-lg font-semibold text-gray-800 mb-4">Update Product</h2>
 
-                <form class="mb-6" method="POST" enctype="multipart/form-data" action="{{ route('admin.products.store') }}">
+                <form class="mb-6" method="POST" enctype="multipart/form-data"
+                    action="{{ route('storeupdate.product', $product->id) }}">
                     @csrf
                     {{-- flash messages --}}
                     @if (session('success'))
@@ -119,10 +120,22 @@
                         <div class="w-1/2 px-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1"
                                 for="availability_status">Availability Status</label>
-                            <input name="availability_status"
+                            <select name="availability_status" id="availability_status"
+                                class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:outline-none"
+                                required>
+                                <option value="">Select a brand</option>
+                                <option value="{{ $product->availability_status }}" selected>
+                                    {{ $product->availability_status }}
+                                </option>
+
+                                <option value="in stock">In stock</option>
+                                <option value="out of stock">Out of stock</option>
+
+                            </select>
+                            {{-- <input name="availability_status"
                                 class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:border-blue-500 focus:outline-none"
                                 id="availability_status" type="text" placeholder="e.g., In stock"
-                                value="{{ $product->availability_status }}" required>
+                                value="{{ $product->availability_status }}" required> --}}
                         </div>
                         <div class="w-1/2 px-2">
                             <label class="block text-sm font-medium text-gray-700 mb-1" for="quantity">Quantity</label>
@@ -139,14 +152,20 @@
                             class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center bg-gray-50 cursor-pointer hover:bg-gray-100">
                             <p class="text-sm text-gray-600 font-semibold">Click to upload or drag and drop</p>
                             <p class="text-xs text-gray-500">SVG, PNG, JPG (MAX. 800x400px)</p>
-                            <input name="img_path" type="file" class="visible" id="dropzone-file"
-                                value="{{ asset('/products/'.$product->img_path) }}">
+                            {{-- show current image if available --}}
+                            @if ($product->img_path)
+                                <div class="mb-3">
+                                    <img src="{{ $product->img_path }}" class="w-10" alt="current product image"
+                                        class="mx-auto h-32 object-contain" />
+                                </div>
+                            @endif
+                            <input name="img_path" type="file" class="visible" id="dropzone-file">
                         </div>
                     </div>
 
                     <button type="submit"
                         class="w-full bg-blue-500 text-white py-2 rounded-lg font-semibold hover:bg-blue-800">
-                        Add Product
+                        Update Product
                     </button>
                 </form>
             </div>
