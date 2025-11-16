@@ -52,10 +52,15 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::get('/manage_products', [DashboardController::class, 'showManageProducts'])->name('manage.products');
     Route::get('/search_products', [DashboardController::class, 'searchProducts'])->name('search.products');
     Route::get('/add_new_products', [DashboardController::class, 'showAddProducts'])->name('add.products');
+    Route::post('/add_new_products', [DashboardController::class, 'storeProduct'])->name('admin.products.store');
+    Route::get('/update_product/{id}', [DashboardController::class, 'showUpdateProduct'])->name('update.product');
+    Route::post('/update_product/{id}', [DashboardController::class, 'updateProduct'])->name('storeupdate.product');
+    
     Route::get('/add_brand', [DashboardController::class, 'showBrands'])->name('add.brand');
     Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
     Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');
     Route::get('/customer_orders', [DashboardController::class, 'showCustomerOrders'])->name('customer.orders');
+    Route::get('/customer_orders/search', [DashboardController::class, 'searchOrdersByID'])->name('customer.orders.search');
     Route::get('/customer_details/{user_id}', [DashboardController::class, 'showCustomerDetails'])->name('customer.details');
     Route::get('/settings', [DashboardController::class, 'showSettings'])->name('settings');
     Route::post('/logout', [AdminSessionController::class, 'destroy'])->name('admin.logout');

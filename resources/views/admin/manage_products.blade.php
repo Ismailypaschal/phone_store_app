@@ -55,9 +55,9 @@
                 </div>
               </div>
               <div class="shrink-0 flex items-center">
-                <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
+                <a href="{{ route('update.product', ['id' => $product->id ]) }}" class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
                   <span class="material-symbols-outlined">more_vert</span>
-                </button>
+                </a>
               </div>
             </div>
           @endforeach
