@@ -55,7 +55,9 @@ Route::prefix('admin')->middleware('auth:admin')->group(function () {
     Route::post('/add_new_products', [DashboardController::class, 'storeProduct'])->name('admin.products.store');
     Route::get('/update_product/{id}', [DashboardController::class, 'showUpdateProduct'])->name('update.product');
     Route::post('/update_product/{id}', [DashboardController::class, 'updateProduct'])->name('storeupdate.product');
-    
+    // Accept DELETE for resourceful deletion 
+    Route::delete('/delete_product/{id}', [DashboardController::class, 'destroyProduct'])->name('delete.product');
+
     Route::get('/add_brand', [DashboardController::class, 'showBrands'])->name('add.brand');
     Route::get('/billing', [DashboardController::class, 'showBilling'])->name('billing');
     Route::get('/profile', [DashboardController::class, 'showProfile'])->name('profile');

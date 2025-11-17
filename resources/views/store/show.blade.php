@@ -2,7 +2,8 @@
 
 @section('content')
 <div class="bg-white rounded-lg shadow-sm overflow-hidden max-w-3xl">
-    <img src="https://picsum.photos/600/400?random={{ $product->id }}" alt="{{ $product->name }}" class="w-full h-64 object-cover">
+    <img src="{{ $product->img_path ? asset($product->img_path) : 'https://picsum.photos/600/400?random=' . $product->id }}"
+                        alt="{{ $product->brand->name }}" class="w-full h-48 object-cover" />
     <div class="p-6">
         <h1 class="text-xl font-semibold">{{ $product->name }}</h1>
         <p class="text-gray-500">{{ $product->storage }} GB • {{ $product->color }}</p>

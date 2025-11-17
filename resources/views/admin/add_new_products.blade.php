@@ -162,7 +162,7 @@
                                 <div class="flex flex-1 flex-col justify-center gap-1">
                                     <p class="text-slate-900 dark:text-white text-base font-bold leading-tight">
                                         {{ $product->name }} -
-                                        {{ $product->storage }}</p>
+                                        {{ $product->storage }}GB</p>
                                     <div class="flex items-center gap-1.5">
                                         <span class="inline-block h-2 w-2 rounded-full bg-green-500"></span>
                                         <p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">
@@ -174,10 +174,19 @@
                                         {{ $product->quantity }} {{ $product->availabilty_status }}</p>
                                 </div>
                             </div>
-                            <div class="shrink-0 flex items-center">
-                                <button class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
+                            <div class="shrink-0 flex items-center gap-2">
+                                <form method="POST" action="{{ route('delete.product', ['id' => $product->id]) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="text-red-500 dark:text-red-400 flex size-8 items-center justify-center">
+                                        <span class="material-symbols-outlined">delete</span>
+                                    </button>
+                                </form>
+                                <a href="{{ route('update.product', ['id' => $product->id]) }}"
+                                    class="text-slate-500 dark:text-slate-400 flex size-8 items-center justify-center">
                                     <span class="material-symbols-outlined">more_vert</span>
-                                </button>
+                                </a>
                             </div>
                         </div>
                     @endforeach

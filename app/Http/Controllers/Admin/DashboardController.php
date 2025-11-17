@@ -181,6 +181,11 @@ class DashboardController extends Controller
         $product->update($data);
         return redirect()->route('manage.products')->with('success', 'Product updated successfully!');
     }
+    public function destroyProduct($id) {
+        $product = Products::findOrFail($id);
+        $product->delete();
+        return redirect()->route('manage.products')->with('success', 'Product deleted successfully!');
+    }
     public function showCustomerDetails($user_id = null)
     {
         // Support passing user_id as parameter OR via route/request
